@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Bla, bla, bla</p>
+
+<script>
+document.write(Date());
+</script>
+
+<p>Bla, bla, bla</p>
+<p id="demo"></p>
+
+<script>
+document.getElementById("demo").innerHTML = "Date : " + Date();
+</script>
+<h2>JavaScript HTML DOM</h2>
+<img id="image" src="/JS DOM/images/landscape.jpg" width="160" height="120">
+
+<script>
+document.getElementById("image").src = "landscape.jpg";
+</script>
+
+<p>The original image was smiley.gif, but the script changed it to landscape.jpg</p>
+<h1 id="id01">Old Heading</h1>
+
+<script>
+const element = document.getElementById("id01");
+element.innerHTML = "New Heading";
+</script>
+
+<p>JavaScript changed "Old Heading" to "New Heading".</p>
+<h2>JavaScript can Change HTML</h2>
+
+<p id="p1">Hello World!</p>
+
+<script>
+document.getElementById("p1").innerHTML = "New text!";
+</script>
+
+<p>The paragraph above was changed by a script.</p>
+</body>
+</html>

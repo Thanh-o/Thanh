@@ -18,7 +18,7 @@
     <input type="button" id="btn1" value="Change Heading 1">
     <input type="button" id="btn2" value="Change Heading 2">
     <input type="button" id="btn3" value="Change paragraph">
-    <script>
+    <script >
         window.onload = init;
 
         function init(){
@@ -28,6 +28,8 @@
         }
 function changeHeading1(){
     elm = document.getElementById("heading1");
+    console.log(elm);
+    console.log(elm.interHTML);
     elm.textContent = "Hello"
     // Create new element
     // document.write("<p>Hello new p tag</p>");
@@ -36,13 +38,13 @@ function changeHeading1(){
     elm.after(newElm);
 }    
 function changeHeading2(){
-    const elms = document.getElementsByTagName("h2");
+    const elms = document.getElementsByTagName("h2");//Array of elements
     for(const elm of elms){
-        elms[i].textContent ="Change H2 to everything";
+        elm.textContent ="Change H2 to everything";
     }
 }
 function changeParagraph(){
-    const elms = document.getElementsByClassName('para');
+    const elms = document.getElementsByClassName('para');//Array of elements
     for(const elm of elms){
         elm.textContent = "Hello,again";
     }
