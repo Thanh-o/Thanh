@@ -12,7 +12,8 @@
         $(document).ready(function(){
             $("#hello").html('Click me!');
             $("#hello").click(function(){
-                $(this).html('Hello, World!')
+               (this).html('Hello, World!')
+                console.log("event click test");
                 return false;
             });
             $('p').mouseover(function(){

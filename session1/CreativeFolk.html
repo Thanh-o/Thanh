@@ -50,7 +50,7 @@
        table, th{
         border-spacing: 10px;
         margin: auto;
-        width: 50%;
+        max-width: 400px;
        }
         td{
         border: 5px solid #ffffff;
@@ -61,7 +61,19 @@
         width: 100%;
         margin-right: 80px;
        }
-      
+       @-webkit-keyframes zoom{
+            from {-webkit-transform: scale(0);}
+            to {-webkit-transform: scale(1);}
+        }
+
+        @keyframes zoom{
+            from {transform: scale(0);}
+            to {transform: scale(1);}            
+        }
+        @media only screen and (max-width: 400px){
+            .modal-content{
+                width: 100%;
+            }}
      
     </style>
     <title>Document</title>
@@ -71,8 +83,8 @@
         <pre><b>CreativeFolk</b>  <p>find talented people for your creative projects</p></pre>
    <div class="a">
     <label for="select-image"> </label>
-    <input id="select-image" list="image" placeholder="filter by search" />
-   </div>
+    <input type="text" name="keyword" id="keyword" placeholder="filter by search">
+    </div>
     <table >
     <tr>
         <td><img src="img/p1.jpg" alt="1"></td>
@@ -91,5 +103,8 @@
     </tr>
 </table>
     </div>
+    <script>
+        
+    </script>
 </body>
 </html>

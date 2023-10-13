@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube API for rest time</title>
+    <style>
+                *{
+            font-family: "Tahoma";
+            box-sizing: border-box;
+        }
+
+        footer{
+            height: 50px;
+            text-align: center;
+        }
+
+        header{
+            padding: 15px;
+        }
+
+        header .logo img{
+            float: left;
+            width: 30%;
+            width: 100px;
+        }
+
+        header .search-box{
+            padding: 25px 0px;
+            float: left;
+            width: 70%;
+        }
+
+        header::after{
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .form-group{
+            margin: 10px 5px;
+        }
+
+        .form-group label:first-child{
+            width: 15%;
+            float: left;
+        }
+
+        .form-group label{
+            float: left;
+        }
+
+        .form-group .form-control{
+            float: left;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        .form-control::after{
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .long-input{
+            width: 40%;
+        }
+
+        .normal-input{
+            width: 30%;
+        }
+
+        .short-input{
+            width: 20%;
+        }
+
+        .error-msg{
+            color: red;
+        }
+
+        .success-msg{
+            color: green;
+        }
+
+        #list-video{
+            padding: 10px;
+        }
+
+        #list-video::after{
+            clear: both;
+            display: table;
+            content: "";
+        }
+
+        .video{
+            width: 30%;
+            float: left;
+            margin: 0 15px;
+            text-align: center;
+        }
+
+        .video img {
+            border-radius: 5px;
+            box-shadow: 3px 3px 10px #888888;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .video img:hover{
+            opacity: 0.7;
+        }
+
+        .video .title{
+            font-weight: bold;
+            margin-top: 10px;
+            height: 47px;
+            overflow: auto;
+            text-align: center;
+            cursor: pointer;
+        
+        }
+
+        .search-box{
+            margin: 15px;
+        }
+
+        .search-box input{
+            width: 50%;
+            height: 30px;
+            border-radius: 5px;
+        }
+
+        .modal{
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content{
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        #caption{
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+
+        .modal-content, #caption{
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @-webkit-keyframes zoom{
+            from {-webkit-transform: scale(0);}
+            to {-webkit-transform: scale(1);}
+        }
+
+        @keyframes zoom{
+            from {transform: scale(0);}
+            to {transform: scale(1);}            
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus{
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @media only screen and (max-width: 700px){
+            .modal-content{
+                width: 100%;
+            }
+        }
+        
+    
+    </style>
+    
+    
+</head>
+<body>
+    <header>
+        <div class="logo"><img src="img/youtube.png" alt=""></div>
+        <div class="search-box">
+            Type and hit enter <input type="text" name="keyword" id="keyword">
+        </div>
+    </header>
+
+    <div id="myModel" class="model">
+        <span class="close">&times;</span>
+        <iframe src="" frameborder="0" class="model-cotent" id="video-frame" width="700" height="415" allowfullscreen></iframe>
+        <div id="caption"></div>
+    </div>
+    <div id="list-video"></div>
+    <footer>
+        <span>Working with Youtube API - FPT Aptect &copy; 2021</span>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event){
+    var inputSearch = document.getElementById("keyword");
+    inputSearch.onkeydown = function(event){
+        if (event.keyCode == 13){
+            loadVideo(this.value);
+        }
+    }
+    loadVideo("Đen vâu")
+});
+
+//Get the modal                         
+var modal = document.getElementById('myModal');
+
+
+var span = document.getElementsByClassName("close")[0];
+
+var videoFrame = document.getElementById("cideo-frame");
+
+
+span.onclick = function(){
+    closeVideo();
+}
+
+
+window.onclick = function(event){
+    if (event.target == modal) {
+        closeVideo();
+    }
+}
+
+function loadVideo(keyword){
+    var YOUTUBE_API = "https://content.googleapis.com/youtube/v3/search?q=%22%20+%20keyword%20+%20%22&type=video&maxResults=9&part=snippet&key=AIzaSyCMPu2Upv5uXwY2y3krXwCE-JKmRUGtcPs";
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", YOUTUBE_API, true);
+    xhr.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+
+            var responseJson = JSON.parse(this.responseText);
+            var htmlContent = "";
+
+            for ( var i = 0; i < responseJson.items.length; i++){
+                if(responseJson.items[i].id.kind == 'youtube#channel'){
+                    continue;
+                }
+                var videoId = responseJson.items[i].id.videoId;
+                var videoTitle = responseJson.items[i].snippet.title;
+                var videoDescription = responseJson.items[i].snippet.desciption;
+                var videoThumbnail = responseJson.items[i].snippet.thumbnails.medium.url;
+                htmlContent += '<div class="video" onclick="showVideo(\'' +videoId + '\')">'
+                    htmlContent += '<img src="' + videoThumbnail + '">'
+                    htmlContent += '<div class="title">' + videoTitle + '</div>'
+                    htmlContent += '</div>'
+            }
+
+            document.getElementById("list-video").innerHTML = htmlContent;
+        }else if(this.readyState == 4){
+            console.log("Fails");
+        }
+    };
+    xhr.send();
+}
+
+function closeVideo(){
+    modal.style.display = "none";
+    videoFrame.src = "";
+}
+
+function showVideo(videoId){
+    videoFrame.src = "https://www.youtube.com/embed" + videoId + "?autoplay=1";
+    setTimeout(function(){
+        modal.style.display = "block;"
+    }, 300);
+}
+    </script>
+    
+</body>
+</html>
