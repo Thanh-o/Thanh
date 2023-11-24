@@ -1,0 +1,17 @@
+div {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    background-color: aqua;
+    
+}
+input{
+    width: 2%;
+}
+button{
+    background-color: rgb(255, 255, 255);
+    padding: 8px;
+    border-radius: 5px;
+    box-shadow: 1px 1px;
+    
+}
